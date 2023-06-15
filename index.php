@@ -190,7 +190,7 @@
         <div class="col-sm-3 mt-2">
           <label class="form-label ">Correspondance Address<label class="clr-red">*</label></label>
           <br>
-          <input type="checkbox" name="check" id="check" onclick="sameadr()" required />
+          <input type="checkbox" name="check" id="check" onclick="sameadr()" />
           <label for=""><i>Same as Permanent Address</i></label>
         </div>
         <div class="col-sm-3 mt-2">
