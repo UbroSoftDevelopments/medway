@@ -1,4 +1,3 @@
-
 <html>
 
 <head>
@@ -44,6 +43,10 @@
 </head>
 
 <body class="">
+  <?php
+  require_once('include/function/spl_autoload_register.php');
+  $userObj = new user;
+  ?>
   <div class="modal bd-example-modal-sm" id="loadercss" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display:none;opacity:1;background-color:#f3efefd1;">
     <div class="modal-dialog modal-dialog-centered  modal-md" role="document">
       <div class="modal-content" style="width: 100%;">
@@ -75,7 +78,8 @@
       <div class="col-sm-4"></div>
 
     </div>
-    <form id="candi_registration" method="post" enctype="multipart/form-data">
+    <form id="" method="post" enctype="multipart/form-data">
+      <?php $userObj->registration() ?>
       <div class="form-group row mt-4">
         <label class="form-label col-sm-3">Country of Education<label class="clr-red">*</label></label>
         <div class="col-sm-6">
@@ -101,7 +105,7 @@
             <img src="" name="examimage" id="examimage" alt="img" />
           </div>
           <input type="file" class="form-control-file border" name="logoimage" id="logoimage">
-          
+
         </div>
         <label class="form-label col-sm-3 mt-2">Course Applied For<label class="clr-red">*</label></label>
         <div class="col-sm-6 mt-2">
@@ -241,13 +245,13 @@
     })();
 
 
-   
 
-function addPara(text) {
-    var p = document.createElement("p");
-    p.textContent = text;
-    document.body.appendChild(p);
-}
+
+    function addPara(text) {
+      var p = document.createElement("p");
+      p.textContent = text;
+      document.body.appendChild(p);
+    }
 
     function checkcountry(vl) {
       if (vl == "Other") {
@@ -271,40 +275,40 @@ function addPara(text) {
       return true;
     }
 
-    $('#candi_registration').on('submit', function(event) {
-      event.preventDefault();
-      var input = document.getElementById('logoimage');
-    if (!input.files) { // This is VERY unlikely, browser support is near-universal
-        console.error("This browser doesn't seem to support the `files` property of file inputs.");
-    } else if (!input.files[0]) {
-        addPara("Please select a file before clicking 'Load'");
-    } else {
-        var file = input.files[0];
-        addPara("File " + file.name + " is " + file.size + " bytes in size");
-    }
-      $('#loadercss').css('display', 'block');
-      $.ajax({
-        url: "api/registration.php",
-        method: "POST",
-        data: new FormData(this),
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function(data) {
-          $('#loadercss').css('display', 'none');
-          data = JSON.parse(data)
-          console.log(data);
-          swal(data.msg, "", data.type).then(function() {
-            window.location.reload();
-          })
+    // $('#candi_registration').on('submit', function(event) {
+    //   event.preventDefault();
+    //   var input = document.getElementById('logoimage');
+    //   if (!input.files) { // This is VERY unlikely, browser support is near-universal
+    //     console.error("This browser doesn't seem to support the `files` property of file inputs.");
+    //   } else if (!input.files[0]) {
+    //     addPara("Please select a file before clicking 'Load'");
+    //   } else {
+    //     var file = input.files[0];
+    //     addPara("File " + file.name + " is " + file.size + " bytes in size");
+    //   }
+    //   $('#loadercss').css('display', 'block');
+    //   $.ajax({
+    //     url: "api/registration.php",
+    //     method: "POST",
+    //     data: new FormData(this),
+    //     contentType: false,
+    //     cache: false,
+    //     processData: false,
+    //     success: function(data) {
+    //       $('#loadercss').css('display', 'none');
+    //       data = JSON.parse(data)
+    //       console.log(data);
+    //       swal(data.msg, "", data.type).then(function() {
+    //         window.location.reload();
+    //       })
 
-          // if(data.status){
-          //       window.location.reload();
-          // }
+    //       // if(data.status){
+    //       //       window.location.reload();
+    //       // }
 
-        }
-      });
-    });
+    //     }
+    //   });
+    // });
 
 
 
