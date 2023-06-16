@@ -35,10 +35,27 @@
       height: auto;
       display: block;
     }
+
+    .loader {
+      background: url('newloader.gif') no-repeat;
+      align-items: center;
+    }
   </style>
 </head>
 
-<body>
+<body class="">
+  <div class="modal bd-example-modal-sm" id="loadercss" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display:none;opacity:1;background-color:#f3efefd1;">
+    <div class="modal-dialog modal-dialog-centered  modal-md" role="document">
+      <div class="modal-content" style="width: 100%;">
+        <div class="modal-body">
+          <center><img src="newloader.gif" class="img-fluid" /></center>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+  </button> -->
 
   <div class="container card mt-4 mb-4">
     <div class="row">
@@ -58,71 +75,26 @@
       <div class="col-sm-4"></div>
 
     </div>
-    <form id="candi_registration" method="post" enctype="multipart/form-data">
+    <form id="candi_registration" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
       <div class="form-group row mt-4">
         <label class="form-label col-sm-3">Country of Education<label class="clr-red">*</label></label>
         <div class="col-sm-6">
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input rdo" name="optradio" value="India" onclick="checkcountry()">India
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input rdo" name="optradio" value="Uzberkistan" onclick="checkcountry()">Uzberkistan
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Ukraine" onclick="checkcountry()" onclick="checkcountry()">Ukraine
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Kazakhstan" onclick="checkcountry()">Kazakhstan
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Kyrgystan" onclick="checkcountry()">Kyrgystan
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Rusia" onclick="checkcountry()">Russia
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="China" onclick="checkcountry()">China
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Bangladesh" onclick="checkcountry()">Bangladesh
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Armenia" onclick="checkcountry()">Armenia
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Phillipines" onclick="checkcountry()">Phillipines
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio" value="Nepal" onclick="checkcountry()">Nepal
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label" onclick="opencountrybox()">
-              <input type="radio" class="form-check-input" name="optradio">Others
-            </label>
-          </div>
-          <input type="hidden" class="form-control mt-3" placeholder="Enter Country Name" name="country_nm" id="othercountry" style="display: block;" />
+          <select class="form-control" name="country_nm" id="othercountry" onchange="checkcountry(document.getElementById('othercountry').value)">
+            <option value="">Choose Country</option>
+            <option value="India">India</option>
+            <option value="Uzberkistan">Uzberkistan</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="Kazakhstan">Kazakhstan</option>
+            <option value="Kyrgystan">Kyrgystan</option>
+            <option value="Russia">Russia</option>
+            <option value="China">China</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Armenia">Armenia</option>
+            <option value="Phillipines">Phillipines</option>
+            <option value="Nepal">Nepal</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" class="form-control mt-3" placeholder="Enter Country Name" name="country_nm" id="cntry_name" style="display: none;" />
         </div>
         <div class="col-sm-3">
           <div id="img-preview" name="imageprev">
@@ -227,7 +199,7 @@
         <label class="form-label col-sm-3 mt-2">Email-ID<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
           <input type="hidden" class="form-control" name="contact_type[]" value="email" required />
-          <input type="text" class="form-control" placeholder="Enter Email Id" name="contact_value[]" required />
+          <input type="text" class="form-control" placeholder="Enter Email Id" name="contact_value[]" required onblur="validateEmail(this);" />
         </div>
         <label class="form-label col-sm-3 mt-2">College/University Name<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
@@ -248,25 +220,51 @@
   </div>
 
   <script>
-    function checkcountry() {
-      var radios = document.getElementsByName('optradio');
+    // Disable form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Get the forms we want to add validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
 
-      for (var i = 0, length = radios.length; i < length; i++) {
-        if (radios[i].checked) {
-          // do whatever you want with the checked radio
-          // alert(radios[i].value);
 
-          $('#othercountry').val(radios[i].value);
+    function checkcountry(vl) {
+      if (vl == "Other") {
+        $('#cntry_name').val();
+        $('#cntry_name').css('display', 'block');
+      } else {
+        $('#cntry_name').css('display', 'none');
+        $('#cntry_name').val(vl);
 
-          // only one radio can be logically checked, don't check the rest
-          break;
-        }
       }
 
     }
 
+    function validateEmail(emailField) {
+      var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+      if (reg.test(emailField.value) == false) {
+        alert('Invalid Email Address');
+        return false;
+      }
+      return true;
+    }
+
     $('#candi_registration').on('submit', function(event) {
       event.preventDefault();
+      $('#loadercss').css('display', 'block');
       $.ajax({
         url: "api/registration.php",
         method: "POST",
@@ -275,8 +273,7 @@
         cache: false,
         processData: false,
         success: function(data) {
-          // alert(data);
-
+          $('#loadercss').css('display', 'none');
           data = JSON.parse(data)
           console.log(data);
           swal(data.msg, "", data.type).then(function() {
@@ -291,7 +288,7 @@
       });
     });
 
-    
+
 
 
 
