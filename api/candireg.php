@@ -1,22 +1,13 @@
 <?php
-	/**
- 	* 
- 	*/
-	class user 
-	{
-    
-function registration()  {  
-      if(isset($_POST["submit"])){
-          include('config/dbconnection.php');
-          //  echo "<script>
-          //  document.getElementById('loadercss').style.display = 'block';
-          //  </script>";
+
+          include('../config/dbconnection.php');
+        
           $timezone = "Asia/Calcutta";
           if (function_exists('date_default_timezone_set')) date_default_timezone_set($timezone);
           $todatetime = date('Y-m-d');
           
-          $i_profile = "reg_candi/".$_FILES["logoimage"]["name"];
-            $target_dirs = "reg_candi/";       
+          $i_profile = "../reg_candi/".$_FILES["logoimage"]["name"];
+            $target_dirs = "../reg_candi/";       
               $target_files = $target_dirs . basename($_FILES["logoimage"]["name"]);
               $uploadOks = 1;
               $imageFileTypes = strtolower(pathinfo($target_files,PATHINFO_EXTENSION));
@@ -126,10 +117,5 @@ function registration()  {
             {
               echo "Sorry, there was an error uploading your file.";
             }     
-        }
-}
-
-
-
-}
+        
 ?>
