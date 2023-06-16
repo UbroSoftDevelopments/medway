@@ -75,7 +75,7 @@
       <div class="col-sm-4"></div>
 
     </div>
-    <form id="candi_registration" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form id="candi_registration" method="post" enctype="multipart/form-data">
       <div class="form-group row mt-4">
         <label class="form-label col-sm-3">Country of Education<label class="clr-red">*</label></label>
         <div class="col-sm-6">
@@ -101,6 +101,7 @@
             <img src="" name="examimage" id="examimage" alt="img" />
           </div>
           <input type="file" class="form-control-file border" name="logoimage" id="logoimage">
+          
         </div>
         <label class="form-label col-sm-3 mt-2">Course Applied For<label class="clr-red">*</label></label>
         <div class="col-sm-6 mt-2">
@@ -142,7 +143,7 @@
           <select class="form-control" name="gender">
             <option value="">Choose Gender</option>
             <option value="Male">Male</option>
-            <option value="Female">Feamle</option>
+            <option value="Female">Female</option>
           </select>
         </div>
         <label class="form-label col-sm-2 mt-2">Reservation<label class="clr-red">*</label></label>
@@ -240,6 +241,14 @@
     })();
 
 
+   
+
+function addPara(text) {
+    var p = document.createElement("p");
+    p.textContent = text;
+    document.body.appendChild(p);
+}
+
     function checkcountry(vl) {
       if (vl == "Other") {
         $('#cntry_name').val();
@@ -264,6 +273,15 @@
 
     $('#candi_registration').on('submit', function(event) {
       event.preventDefault();
+      var input = document.getElementById('logoimage');
+    if (!input.files) { // This is VERY unlikely, browser support is near-universal
+        console.error("This browser doesn't seem to support the `files` property of file inputs.");
+    } else if (!input.files[0]) {
+        addPara("Please select a file before clicking 'Load'");
+    } else {
+        var file = input.files[0];
+        addPara("File " + file.name + " is " + file.size + " bytes in size");
+    }
       $('#loadercss').css('display', 'block');
       $.ajax({
         url: "api/registration.php",
