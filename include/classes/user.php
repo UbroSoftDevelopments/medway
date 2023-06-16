@@ -8,7 +8,9 @@
 function registration()  {  
       if(isset($_POST["submit"])){
           include('config/dbconnection.php');
-        
+          //  echo "<script>
+          //  document.getElementById('loadercss').style.display = 'block';
+          //  </script>";
           $timezone = "Asia/Calcutta";
           if (function_exists('date_default_timezone_set')) date_default_timezone_set($timezone);
           $todatetime = date('Y-m-d');
@@ -94,13 +96,21 @@ function registration()  {
                         //   echo "<div class='list-group-item list-group-item-danger'>Address!!</div>";  
                         // }
                       }
-          
+          //             echo "<script>
+          //  document.getElementById('loadercss').style.display = 'none';
+          //  </script>";
+                      echo "<script>
+                      alert('Registered Successfuly')
+                       </script>";
                       echo "<div style='text-align:center;' class='list-group-item list-group-item-success'>Registered Successfull</div>";
 
                       // $res->type = "success";
                       // $res->status = true;
                       // echo "<div style='text-align:center;' class='list-group-item list-group-item-success'>Ingredient Added Successfull</div>";
-                      //header("Location: index.php");
+                      // header("Location: index.php");
+                      echo "<script>
+                     alert('Registered Successfuly')
+                      </script>";
                     } else {
                       echo "Something Went Wrong!";
                       
