@@ -46,14 +46,19 @@ switch ($REQ_METHOD) {
     $databaseTargetFilePath = '../reg_candi/' . $fileName;
     $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
     $allowTypes = array('jpg', 'png', 'jpeg');
+
+    $timezone = "Asia/Calcutta";
+    if (function_exists('date_default_timezone_set')) date_default_timezone_set($timezone);
+    $todatetime = date('Y-m-d');
     if (in_array($fileType, $allowTypes)) {
       if (move_uploaded_file($fileName_tempname, $targetFilePath)) {
 
-        $sql = "INSERT INTO `candidate`(`pprid`, `name`, `dob`, `gender`, `category`, `father_name`, `mother_name`) VALUES
-    (:pid,:s_name,:dob, :gender, :reserve, :f_name, :m_name)";
+        $sql = "INSERT INTO `candidate`(`pprid`, `name`, `dob`, `gender`, `category`, `father_name`, `mother_name`,`created_at`) VALUES
+    (:pid,:s_name,:dob, :gender, :reserve, :f_name, :m_name,:crdt)";
         $r = $db->prepare($sql);
         $insertvisitor = $r->execute(array(
-          ':pid' => $_POST['course'], ':s_name' => $_POST['fname'] . " " . $_POST['lname'], ':dob' => $_POST['dob'], ':gender' => $_POST['gender'], ':reserve' => $_POST['reserve'], ':f_name' => $_POST['f_name'], ':m_name' => $_POST['m_name']
+          ':pid' => $_POST['course'], ':s_name' => $_POST['fname'] . " " . $_POST['lname'], ':dob' => $_POST['dob'], ':gender' => $_POST['gender'], ':reserve' => $_POST['reserve'], ':f_name' => $_POST['f_name'], ':m_name' => $_POST['m_name'],
+          ':crdt' => $todatetime
         ));
         if ($insertvisitor) {
 
