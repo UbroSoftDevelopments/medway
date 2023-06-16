@@ -41,65 +41,42 @@ switch ($REQ_METHOD) {
   case 'POST':
     $data = (file_get_contents('php://input'));
 
-    $fileName = $_FILES["logoimage"]["name"];
-    $fileName_tempname = $_FILES["logoimage"]["tmp_name"];
-    $targetFilePath = '../reg_candi/' . $fileName;
-    $databaseTargetFilePath = '../reg_candi/' . $fileName;
-    $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
-    $allowTypes = array('jpg', 'png', 'jpeg');
+    // $fileName = $_FILES["logoimage"]["name"];
+    // $fileName_tempname = $_FILES["logoimage"]["tmp_name"];
+    // $targetFilePath = '../reg_candi/' . $fileName;
+    // $databaseTargetFilePath = '../reg_candi/' . $fileName;
+    // $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+    // $allowTypes = array('jpg', 'png', 'jpeg');
     
     $timezone = "Asia/Calcutta";
     if (function_exists('date_default_timezone_set')) date_default_timezone_set($timezone);
     $todatetime = date('Y-m-d');
     
-    $target_dir = "../reg_candi/";
-    $target_file = $target_dir . basename($_FILES["logoimage"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    $i_profile = "../reg_candi/".$_FILES["logoimage"]["name"];
+      $target_dirs = "../reg_candi/";       
+        $target_files = $target_dirs . basename($_FILES["logoimage"]["name"]);
+        $uploadOks = 1;
+        $imageFileTypes = strtolower(pathinfo($target_files,PATHINFO_EXTENSION));
+        if($imageFileTypes != "jpg" && $imageFileTypes != "png" && $imageFileTypes != "jpeg") {
+            //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOks = 0;
+        }
+        if ($uploadOks == 0) {
+           // echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["logoimage"]["tmp_name"], $target_files)) {
+               // echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+              $res->msg = "The file ". basename( $_FILES["logoimage"]["name"]). " has been uploaded.";
+              $res->type = "info";
+            } else {
+               
+               $res->msg = "Sorry, there was an error uploading your file.";
+              $res->type = "danger";
+            }
+        }
     
-    // Check if image file is a actual image or fake image
-    // if(isset($_POST["submit"])) {
-    //   $check = getimagesize($_FILES["logoimage"]["tmp_name"]);
-    //   if($check !== false) {
-    //     $res->msg = "File is an image - " . $check["mime"] . ".";
-    //     $res->type = "danger";
-    //     $uploadOk = 1;
-    //   } else {
-    //     $res->msg ="File is not an image.";
-    //     $res->type = "danger";
-    //     $uploadOk = 0;
-    //   }
-    // }
-    
-    // Check if file already exists
-    if (file_exists($target_file)) {
-      $res->msg = "Sorry, file already exists.";
-      $res->type = "danger";
-      $uploadOk = 0;
-    }
-    
-    // Check file size
-    if ($_FILES["logoimage"]["size"] > 500000) {
-      $res->msg = "Sorry, your file is too large.";
-      $res->type = "danger";
-      $uploadOk = 0;
-    }
-    
-    // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
-      $res->msg = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-      $res->type = "danger";
-      $uploadOk = 0;
-    }
-    
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-      $res->msg = "Sorry, your file was not uploaded.";
-      $res->type = "danger";
-    // if everything is ok, try to upload file
-    } else {
-      if (move_uploaded_file($_FILES["logoimage"]["tmp_name"], $target_file)) {
+      try {
     
         $sql = "INSERT INTO `candidate`(`pprid`, `name`, `dob`, `gender`, `category`, `father_name`, `mother_name`,`created_at`) VALUES
         (:pid,:s_name,:dob, :gender, :reserve, :f_name, :m_name,:crdt)";
@@ -124,7 +101,7 @@ switch ($REQ_METHOD) {
     
                 $sqlphoto = "INSERT INTO `candidatephotomaster`(`photo`, `candidateid`) VALUES (:pic, :stuid)";
                 $newpic = $db->prepare($sqlphoto);
-                $insertpic = $newpic->execute(array(':pic' => $databaseTargetFilePath, ':stuid' => $last_id));
+                $insertpic = $newpic->execute(array(':pic' => $i_profile, ':stuid' => $last_id));
     
                 for ($i = 0; $i < 5; $i++) {
     
@@ -146,7 +123,7 @@ switch ($REQ_METHOD) {
                   $state = $_POST['state'];
                   $country = $_POST['country_nm'];
                   $sqls = "INSERT INTO `address`(`addtype`, `address`, `district`, `pincode`, `city`, `state`, `country`, `candidateiid`)
-               VALUES (:atype, :addres, :dist, :pin, :city, :stat, :country, :stuid )";
+                  VALUES (:atype, :addres, :dist, :pin, :city, :stat, :country, :stuid )";
                   $user = $db->prepare($sqls);
                   $insert = $user->execute(array(
                     ':atype' => $add_type, ':addres' => $add_value, ':dist' => $city,
@@ -170,14 +147,21 @@ switch ($REQ_METHOD) {
               $res->msg = "Not Created!";
               $res->type = "info";
             }
-      } else {
+            $db = null;
+       }        
+      catch(PDOException $e)
+      {
         $res->msg = "Sorry, there was an error uploading your file.";
         $res->type = "danger";
-        
       }
+      // else {
+      //   $res->msg = "Sorry, there was an error uploading your file.";
+      //   $res->type = "danger";
+        
+      // }
     
     
-    }
+    
 
     echo  json_encode($res);
     break;
