@@ -102,7 +102,7 @@
         </div>
         <div class="col-sm-3">
           <div id="img-preview" name="imageprev">
-            <img src="" name="examimage" id="examimage" alt="img" />
+            <img src="" name="examimage" id="examimage" alt="img" style="width:135px;height:135px"/>
           </div>
           <input type="file" class="form-control-file border" name="logoimage" id="logoimage">
 
@@ -284,7 +284,7 @@
         addPara("Please select a file before clicking 'Load'");
       } else {
         var file = input.files[0];
-        addPara("File " + file.name + " is " + file.size + " bytes in size");
+       // addPara("File " + file.name + " is " + file.size + " bytes in size");
       }
       $('#loadercss').css('display', 'block');
       $.ajax({
@@ -299,12 +299,12 @@
           // data = JSON.parse(data)
           // console.log(data);
           
-          console.log(data);
-          // swal(data.msg, "", data.type).then(function() {
-          //   window.location.reload();
-          // })
+         // console.log(data);
+          swal("Done", data,"success").then(function() {
+            window.location.reload();
+          })
 
-          // if(data.status){
+          // if(true){
           //       window.location.reload();
           // }
 

@@ -90,10 +90,10 @@
           //             echo "<script>
           //  document.getElementById('loadercss').style.display = 'none';
           //  </script>";
-                      echo "<script>
-                      alert('Registered Successfuly')
-                       </script>";
-                      echo "<div style='text-align:center;' class='list-group-item list-group-item-success'>Registered Successfull</div>";
+                      // echo "<script>
+                      // alert('Registered Successfuly')
+                      //  </script>";
+                      //echo "<div style='text-align:center;' class='list-group-item list-group-item-success'>Registered Successfull</div>";
 
                       // $res->type = "success";
                       // $res->status = true;
@@ -104,11 +104,9 @@
                       echo "Something Went Wrong!";
                       
                     }
-                    echo "<script>
-                    alert('Registered Successfuly')
-                     </script>";
+                    echo "Registered Successfuly";
                   } else {
-                    echo "Not Created!";
+                    echo "Not Registered Successfuly";
                     
                   }
                   $db = null;
