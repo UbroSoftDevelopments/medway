@@ -299,10 +299,10 @@
           // data = JSON.parse(data)
           // console.log(data);
           
-         // console.log(data);
-          swal("Done", data,"success").then(function() {
-            window.location.reload();
-          })
+          console.log(data);
+          // swal("Done", data,"success").then(function() {
+             window.location.href= "preview.php?reg_id="+data;
+          // })
 
           // if(true){
           //       window.location.reload();

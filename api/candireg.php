@@ -104,7 +104,8 @@
                       echo "Something Went Wrong!";
                       
                     }
-                    echo "Registered Successfuly";
+                    echo $last_id;
+                    //header("Location: preview.php?reg_id=".$last_id);
                   } else {
                     echo "Not Registered Successfuly";
                     
