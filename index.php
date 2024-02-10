@@ -10,6 +10,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+  <?php
+  require_once('include/function/spl_autoload_register.php');
+  $fetchrecordobj = new fetchrecord;
+  ?>
   <style>
     body {
       background-color: ghostwhite;
@@ -43,10 +48,6 @@
 </head>
 
 <body class="">
-  <?php
- // require_once('include/function/spl_autoload_register.php');
- // $userObj = new user;
-  ?>
   <div class="modal bd-example-modal-sm" id="loadercss" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display:none;opacity:1;background-color:#f3efefd1;">
     <div class="modal-dialog modal-dialog-centered  modal-md" role="document">
       <div class="modal-content" style="width: 100%;">
@@ -56,9 +57,7 @@
       </div>
     </div>
   </div>
-  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button> -->
+
 
   <div class="container card mt-4 mb-4">
     <div class="row">
@@ -76,135 +75,83 @@
         <h5 style="margin-top: 7px;">CBT REGISTRATION FORM</h5>
       </div>
       <div class="col-sm-4"></div>
-
     </div>
     <form id="candi_registration" method="post" enctype="multipart/form-data">
-      <?php // $userObj->registration() ?>
+      <?php // $userObj->registration() 
+      ?>
       <div class="form-group row mt-4">
-        <label class="form-label col-sm-3">Country of Education<label class="clr-red">*</label></label>
+        <label class="form-label col-sm-3">Course Applied For<label class="clr-red">*</label></label>
         <div class="col-sm-6">
-          <select class="form-control" name="country_nm" id="othercountry" onchange="checkcountry(document.getElementById('othercountry').value)">
-            <option value="">Choose Country</option>
-            <option value="India">India</option>
-            <option value="Uzberkistan">Uzberkistan</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="Kazakhstan">Kazakhstan</option>
-            <option value="Kyrgystan">Kyrgystan</option>
-            <option value="Russia">Russia</option>
-            <option value="China">China</option>
-            <option value="Bangladesh">Bangladesh</option>
-            <option value="Armenia">Armenia</option>
-            <option value="Phillipines">Phillipines</option>
-            <option value="Nepal">Nepal</option>
-            <option value="Other">Other</option>
+          <select class="form-control" name="course" required>
+            <option value="">Choose Course</option>
+            <?php $fetchrecordobj->getpaper(); ?>
           </select>
-          <input type="text" class="form-control mt-3" placeholder="Enter Country Name" name="country_nm" id="cntry_name" style="display: none;" />
         </div>
         <div class="col-sm-3">
           <div id="img-preview" name="imageprev">
-            <img src="" name="examimage" id="examimage" alt="img" style="width:135px;height:135px"/>
+            <img src="" name="examimage" id="examimage" alt="img" style="width:135px;height:135px" />
           </div>
-          <input type="file" class="form-control-file border" name="logoimage" id="logoimage">
-
+          <label class="text-danger">Max Size allowed 200 KB.</label>
+          <input type="file" class="form-control-file border upload-file" accept="image/*" data-max-size="200000" name="logoimage" id="logoimage" required>
+          <input type="hidden" class="form-control" id="exlogo" name="exlogo" required>
         </div>
-        <label class="form-label col-sm-3 mt-2">Course Applied For<label class="clr-red">*</label></label>
-        <div class="col-sm-6 mt-2">
-          <select class="form-control" name="course">
-            <option value="">Choose Course</option>
-            <option value="1">NEET - PG</option>
-            <option value="2">NEXT</option>
-            <option value="3">FMGE</option>
-          </select>
-        </div>
-        <div class="col-sm-3 mt-2"></div>
         <label class="form-label col-sm-3 mt-2">First Name<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
           <input type="text" class="form-control" placeholder="Enter First Name" name="fname" required />
+          <input type="hidden" placeholder="Registration Closed" id="registration" value="Close" />
         </div>
         <label class="form-label col-sm-3 mt-2">Last Name<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
           <input type="text" class="form-control" placeholder="Enter Last Name" name="lname" required />
         </div>
-        <label class="form-label col-sm-3 mt-2">Father's/Guardian's Name<label class="clr-red">*</label></label>
-        <div class="col-sm-9 mt-2">
-          <input type="text" class="form-control" placeholder="Enter Father's/Guardian's Name" name="f_name" required />
-        </div>
-        <label class="form-label col-sm-3 mt-2">Mother's Name<label class="clr-red">*</label></label>
-        <div class="col-sm-3 mt-2">
-          <input type="text" class="form-control" placeholder="Enter Mother's Name" name="m_name" required />
-        </div>
         <label class="form-label col-sm-3 mt-2">Mobile<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
           <input type="hidden" class="form-control" name="contact_type[]" value="mob_student" required />
-          <input type="text" class="form-control" placeholder="Enter Mobile Number" name="contact_value[]" required />
+          <input type="number" maxlength="10" onKeyPress="if(this.value.length==10) return false;" class="form-control" placeholder="Enter Mobile Number" name="contact_value[]" required />
         </div>
         <label class="form-label col-sm-3 mt-2">Date of Birth (Dob)<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
+        <div class="col-sm-3 mt-2">
           <input type="date" class="form-control" placeholder="Enter Date of Birth" name="dob" required />
         </div>
-        <label class="form-label col-sm-1 mt-2">Gender<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
-          <select class="form-control" name="gender">
+        <label class="form-label col-sm-3 mt-2">Gender<label class="clr-red">*</label></label>
+        <div class="col-sm-3 mt-2">
+          <select class="form-control" name="gender" required>
             <option value="">Choose Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
-        <label class="form-label col-sm-2 mt-2">Reservation<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
-          <select class="form-control" name="reserve">
-            <option value="">Choose</option>
-            <option value="General">General</option>
-            <option value="SC/ST">SC/ST</option>
-            <option value="OBC">OBC</option>
-          </select>
-        </div>
-        <label class="form-label col-sm-3 mt-2">Permanent Address<label class="clr-red">*</label></label>
-        <div class="col-sm-3 mt-2">
-          <input type="hidden" class="form-control" name="add_type[]" value="Permanent" required />
-          <textarea class="form-control" placeholder="Enter Permanent Address" name="address[]" id="per_address"></textarea>
-        </div>
-        <div class="col-sm-3 mt-2">
-          <label class="form-label ">Correspondance Address<label class="clr-red">*</label></label>
-          <br>
-          <input type="checkbox" name="check" id="check" onclick="sameadr()" />
-          <label for=""><i>Same as Permanent Address</i></label>
-        </div>
-        <div class="col-sm-3 mt-2">
-          <input type="hidden" class="form-control" name="add_type[]" value="Correspondance" required />
-          <textarea class="form-control" placeholder="Enter Correspondance Address" name="address[]" id="cor_address"></textarea>
-        </div>
-        <label class="form-label col-sm-3 mt-2">City<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
-          <input type="text" class="form-control" placeholder="Enter City" name="city" required />
-        </div>
-        <label class="form-label col-sm-1 mt-2">State<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
-          <input type="text" class="form-control" placeholder="Enter State" name="state" required />
-        </div>
-        <label class="form-label col-sm-2 mt-2">Pincode<label class="clr-red">*</label></label>
-        <div class="col-sm-2 mt-2">
-          <input type="text" class="form-control" placeholder="Enter Pincode" name="pincode" required />
-        </div>
-        <label class="form-label col-sm-3  mt-2">Mobile (Parent's)<label class="clr-red">*</label></label>
-        <div class="col-sm-3  mt-2">
-          <input type="hidden" class="form-control" name="contact_type[]" value="father" required />
-          <input type="text" class="form-control" placeholder="Enter Mobile (Parent's)" name="contact_value[]" required />
-        </div>
-        <label class="form-label col-sm-3  mt-2">Mobile (Mother's)<label class="clr-red">*</label></label>
-        <div class="col-sm-3  mt-2">
-          <input type="hidden" class="form-control" name="contact_type[]" value="mob_mother" required />
-          <input type="text" class="form-control" placeholder="Enter Mobile (Mother's)" name="contact_value[]" required />
-        </div>
-        <label class="form-label col-sm-3 mt-2">Mobile (WhatsApp)<label class="clr-red">*</label></label>
-        <div class="col-sm-3 mt-2">
-          <input type="hidden" class="form-control" name="contact_type[]" value="mob_whatsapp" required />
-          <input type="text" class="form-control" placeholder="Enter Mobile (WhatsApp)" name="contact_value[]" required />
-        </div>
+        <!-- <label class="form-label col-sm-2 mt-2">Reservation<label class="clr-red">*</label></label>
+          <div class="col-sm-2 mt-2">
+            <select class="form-control" name="reserve" required>
+              <option value="">Choose</option>
+              <option value="General">General</option>
+              <option value="SC/ST">SC/ST</option>
+              <option value="OBC">OBC</option>
+            </select>
+          </div> -->
+        <!-- <label class="form-label col-sm-3 mt-2">Permanent Address<label class="clr-red">*</label></label>
+          <div class="col-sm-3 mt-2">
+            <input type="hidden" class="form-control" name="add_type[]" value="Permanent" required />
+            <textarea class="form-control" placeholder="Enter Permanent Address" name="address[]" id="per_address" required></textarea>
+          </div>
+          <label class="form-label col-sm-3 mt-2">City<label class="clr-red">*</label></label>
+          <div class="col-sm-3 mt-2">
+            <input type="text" class="form-control" placeholder="Enter City" name="city" required />
+          </div>
+          <label class="form-label col-sm-3 mt-2">State<label class="clr-red">*</label></label>
+          <div class="col-sm-3 mt-2">
+            <input type="text" class="form-control" placeholder="Enter State" name="state" required />
+          </div>
+          <label class="form-label col-sm-3 mt-2">Pincode<label class="clr-red">*</label></label>
+          <div class="col-sm-3 mt-2">
+            <input type="number" maxlength="6" onKeyPress="if(this.value.length==6) return false;"
+            class="form-control" placeholder="Enter Pincode" name="pincode" required />
+          </div> -->
         <label class="form-label col-sm-3 mt-2">Email-ID<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
           <input type="hidden" class="form-control" name="contact_type[]" value="email" required />
-          <input type="text" class="form-control" placeholder="Enter Email Id" name="contact_value[]" required onblur="validateEmail(this);" />
+          <input type="text" class="form-control" placeholder="Enter Email Id" name="contact_value[]" id="emailid" required onblur="validateEmail(this);" />
         </div>
         <label class="form-label col-sm-3 mt-2">College/University Name<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
@@ -212,41 +159,18 @@
         </div>
         <label class="form-label col-sm-3 mt-2">Year of Passing<label class="clr-red">*</label></label>
         <div class="col-sm-3 mt-2">
-          <input type="text" class="form-control" placeholder="Enter Year of Passing" name="y_o_p" required />
+          <input type="number" maxlength="4" onKeyPress="if(this.value.length==4) return false;" class="form-control" placeholder="Enter Year of Passing" name="y_o_p" required />
         </div>
         <div class="col-sm-5"></div>
         <div class="col-sm-2 mt-4">
           <button class="btn form-control bg-primary text-white" type="submit" name="submit">Register</button>
         </div>
         <div class="col-sm-5"></div>
-
       </div>
     </form>
   </div>
 
   <script>
-    // Disable form submissions if there are invalid fields
-    (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-        // Get the forms we want to add validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          }, false);
-        });
-      }, false);
-    })();
-
-
-
-
     function addPara(text) {
       var p = document.createElement("p");
       p.textContent = text;
@@ -278,15 +202,43 @@
     $('#candi_registration').on('submit', function(event) {
       event.preventDefault();
       var input = document.getElementById('logoimage');
-      if (!input.files) { // This is VERY unlikely, browser support is near-universal
-        console.error("This browser doesn't seem to support the `files` property of file inputs.");
-      } else if (!input.files[0]) {
-        addPara("Please select a file before clicking 'Load'");
-      } else {
-        var file = input.files[0];
-       // addPara("File " + file.name + " is " + file.size + " bytes in size");
+      var registration = document.getElementById('registration').value;
+      if (registration == "Close") {
+        swal("Warning", "Registration Closed", "warning", {
+          button: "Done",
+        })
+        return;
       }
-      $('#loadercss').css('display', 'block');
+
+      var emailconfirm = $('#emailid').val();
+      var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+      if (reg.test(emailconfirm) == false) {
+        alert('Invalid Email Address');
+        return false;
+      }
+
+      var fileInput = $('.upload-file');
+      var maxSize = fileInput.data('max-size');
+      var imgdt = document.getElementById('exlogo');
+      if (fileInput.get(0).files.length) {
+        var fileSize = fileInput.get(0).files[0].size; // in bytes
+        if (fileSize > maxSize) {
+          alert('File size is more then ' + maxSize + ' KB');
+          return false;
+        }
+        if (imgdt.value == "") {
+          alert('Image not choosen!! Choose Image');
+          return false;
+        }
+        // else{
+        //     alert('File size is correct- '+fileSize+' MB');
+        // }
+      } else {
+        alert('Choose file, please');
+        return false;
+      }
+
       $.ajax({
         url: "api/candireg.php",
         method: "POST",
@@ -297,24 +249,38 @@
         success: function(data) {
           $('#loadercss').css('display', 'none');
           // data = JSON.parse(data)
-          // console.log(data);
-          
+          //alert(data)
+          if (data == 404) {
+            swal("Warning", "Mobile Number Already Registered", "warning", {
+              button: "Done",
+            })
+            return;
+          }
           console.log(data);
+          $('#loadercss').css('display', 'block');
+          swal("Congratulation", "Registered Successfully", "success", {
+            button: "Done",
+          }).then(function(isConfirm) {
+            if (isConfirm) {
+              window.location.href = "preview.php?reg_id=" + data;
+            }
+          });
+
+
           // swal("Done", data,"success").then(function() {
-             window.location.href= "preview.php?reg_id="+data;
+          //    window.location.href= "preview.php?reg_id="+data;
           // })
 
           // if(true){
           //       window.location.reload();
           // }
 
+        },
+        error: (err) => {
+          swal("WARNING! ", "Something Went Wrong! ", "warning")
         }
       });
     });
-
-
-
-
 
     function sameadr() {
       document.getElementById('cor_address').value = document.getElementById('per_address').value
@@ -332,15 +298,25 @@
 
     function getImgData() {
       const files = chooseFile.files[0];
-      if (files) {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(files);
-        fileReader.addEventListener("load", function() {
-          imgPreview.style.display = "block";
-          document.getElementById('examimage').src = this.result;
-          //document.getElementById('exlogo').value= this.result;
 
-        });
+      var fileInput = $('.upload-file');
+      var maxSize = fileInput.data('max-size');
+      if (fileInput.get(0).files.length) {
+        var fileSize = fileInput.get(0).files[0].size; // in bytes
+        if (fileSize > maxSize) {
+          alert('File size is not more then 200 KB');
+          return false;
+        }
+        if (files) {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(files);
+          fileReader.addEventListener("load", function() {
+            imgPreview.style.display = "block";
+            document.getElementById('examimage').src = this.result;
+            document.getElementById('exlogo').value = this.result;
+
+          });
+        }
       }
     }
   </script>

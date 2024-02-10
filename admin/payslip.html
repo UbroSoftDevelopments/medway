@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>Pay Slip</title>
+
+  <style type="text/css">
+  .row{
+      width: 100%;
+      max-width: 100%;      
+  }
+  table{
+width: 100%;
+border-collapse:collapse;
+border: 1px solid black;
+}
+.ml{
+  margin-left: 5px;
+}
+.mr{
+  margin-right: 5px;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  
+  
+}
+.watermark{
+    opacity: 0.25;
+    width: 280px;
+    position: fixed;
+    top: 33%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -140px;
+}
+@media print {
+    .blue {
+      background-color: #42b8dc !important;
+      color: white;
+        -webkit-print-color-adjust: exact; 
+    }
+}
+.fs12{
+  font-size: 12px;;
+}
+.fs10{
+  font-size: 10px;
+}
+.pad4{
+  padding: 4px;
+}
+  </style>
+</head>
+<body >    
+  <div class="container">
+    <div class="watermark">
+      <img src="assets/Title_UB.png" alt="Notebook" style="width:100%;">
+    </div>
+    
+    <div class="content">
+          <center>  
+            <img src="assets/ub2.png" alt="img" style="width: 120px;height: 65px;" />
+          </center><br/>  
+<div class="blue" style="height: 5px;width:100%;background-color: #59aac2;"></div>
+    
+      <br/><center><b><label style="font-size: 1.5em;">Pay Slip</label></b></center><br/>
+      <table class="" border="1" >
+        <thead class="blue" style="background-color: #59aac2;color: white;">
+         <tr >
+          <th colspan="2" width="50%" class="fs12 pad4" >Employee Details</th>
+          <th colspan="2" width="50%" class="fs12 pad4">Payment Details</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr >
+          <td>
+            <label class="ml fs10"><b>Name :</b> Shashank Kr SIngh</label><br/><br/>
+            <label class="ml fs10"><b>Design :</b> Sr. Programmer<label></label><br/><br/>
+            <label class="ml fs10"><b>Location :</b> Varanasi</label><br/><br/>
+          </td>
+          <td>
+            <label class="ml fs10"><b>Employee Code :</b> EMPVAR762</label><br/><br/>
+            <label class="ml fs10"><b>Department :</b> S/W Development </label><br/><br/>
+            <label class="ml fs10"><b>PAN :</b> HPYPS3391A</label><br/><br/>
+          </td>
+          <td>
+            <label class="ml fs10"><b>Bank Name :</b>  Union Bank of India</label><br/><br/>
+            <label class="ml fs10"><b>Account No. :</b>  416702010723858</label><br/><br/>
+            <label class="ml fs10"><b>No. of working days in Apr'22:</b> 21</label><br/><br/>
+          </td>
+          <td>
+            <label class="ml fs10"><b>Pay Slip of Apr'22 :</b> </label><br/><br/>
+            <label class="ml fs10"><b>Days Paid :</b> 21</label><br/><br/>
+            <label class="ml fs10"><b>No. of days Worked :</b> 21</label><br/><br/></td>          
+         </tr>      
+        </tbody>
+      </table>
+      <br/><br/>
+      <table class="" border="1">
+        <thead class="blue" style="background-color: #59aac2;color:white">
+         <tr >
+          <th  width="25%" style="text-align: left;"><lable class="ml fs12 pad4">Earning</lable></th>
+          <th  width="25%" style="text-align: right;"><lable class="mr fs12 pad4">Amount</lable></th>
+          <th  width="25%" style="text-align: left;"><lable class="ml fs12 pad4">Deduction</lable></th>
+          <th  width="25%" style="text-align: right;"><lable class="mr fs12 pad4">Amount</lable></th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr >
+          <td>
+            <label class="ml">Salary</label><br/>
+            <label class="ml">Extra Working</label><br/><br/><br/><br/><br/><br><br/>
+          </td>
+          <td style="text-align: right;">
+            <label class="mr">32000.00</label><br/>
+            <label class="mr">0.00</label><br/><br/><br/><br/><br/><br/><br/>
+          </td>
+          <td>
+            <label class="ml">Employee PF</label><br/>
+            <label class="ml">Profession Tax</label><br/>
+            <label class="ml">TDS</label><br/>
+            <label class="ml">Leave</label><br/><br/><br/><br/><br/>
+          </td>
+          <td style="text-align: right;">
+            <label class="mr">0.00</label><br/>
+            <label class="mr">0.00</label><br/>
+            <label class="mr">0.00</label><br/>
+            <label class="mr">0.00</label><br/><br/><br/><br/><br/>
+         </tr>      
+         <tr>
+           <td><label class="ml">Total Earning</label></td>
+           <td style="text-align: right;"><label class="mr" >32000.00</label></td>
+           <td><label class="ml">Total Deduction</label></td>
+           <td style="text-align: right;"><label class="mr">0.00</label></td>
+         </tr>
+        </tbody>
+      </table>
+      <br/><br/>
+     
+      <div class="blue" style="border:1px solid;width:25%;float:right;background-color: #59aac2;color: white; padding: 2px;">
+        <label class="ml" style="font-size: 14px"><b>Net Pay Rs. : 32000.00</b> </label>
+      </div>
+      <br/><br/><br/>
+      <table border="1" style="text-align: center;">
+        <tr><td class="pad4"><label><b>CTC (Monthly) Rs. 32000.00</b></label></td></tr>
+        <tr><td class="pad4"><label><b>Net Salary (In Figure) Rs. 32000.00 (Rupees Thirty Two Thousand Only)</b></label></td></tr>
+      </table>
+      <div class="container-fluid" style="margin-top:20px">  <img src="ubrostamp.png" alt="img" /></div>
+      <div style="height: 400px;" class="container-fluid">
+          
+      </div>
+      <div class="blue" style="height: 5px;width:100%;background-color: #59aac2;"></div>
+      <center><label class="fs12"><b>Address :</b>2ndFloor, Janki Nagar Mod, Lanka - Samne Ghat Road, Near BHUTrauma Centre,Varanasi, Uttar Pradesh – 221005, India 
+        <b>Telephone:</b>+91-7786869685, <b>Email Id :</b>info@ubrosoft.com, <b>Web Site :</b>www.ubrosoft.com</label></center>
+    </div>
+  </div>
+</body>
+
+
+</html>
